@@ -6,7 +6,7 @@
     <div class="article-header">
       <h1>{{ .Title }}</h1>
       <div class="meta">
-        {{ .Date.Format "Jan 2, 2006" }} &nbsp;
+        {{ .Date.Format "2006-01-02" }} &nbsp;
         {{ range .Params.tags }}
           #<a href="/tags/{{ . | urlize }}">{{ . }}</a>&nbsp;
         {{ end }}
@@ -39,5 +39,17 @@
       <span class="next"><a href="{{ .Prev.Permalink }}" rel="next">{{ .Prev.Title }}</a> &rarr;</span>
     {{ end }}
   </nav>
+
+  <!-- utteranc comment component
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  {{ with .Site.Params.utteranc_repo }}
+  <script src="https://utteranc.es/client.js"
+          repo="{{ . }}"
+          issue-term="pathname"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+  {{ end }}
 
 {{ partial "footer.html" . }}

@@ -1,0 +1,9 @@
+<!-- https://github.com/gohugoio/hugo/blob/7a080b624e73fe3a10cfab9ee4fa8e9b7e7c31ad/hugolib/hugo_modules_test.go#L866 -->
+{{ $link := .Destination }}
+{{ $isRemote := strings.HasPrefix $link "http" }}
+{{- if not $isRemote -}}
+{{ $url := urls.Parse .Destination }}
+{{ $fragment := "" }}
+{{- with $url.Fragment }}{{ $fragment = printf "#%s" . }}{{ end -}}
+{{- with .Page.GetPage $url.Path }}{{ $link = printf "%s%s" .Permalink $fragment }}{{ end }}{{ end -}}
+<a href="{{ $link | safeURL }}"{{ with .Title}} title="{{ . }}"{{ end }}{{ if $isRemote }} target="_blank"{{ end }}>{{ .Text | safeHTML }}</a>
