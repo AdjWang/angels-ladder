@@ -1,0 +1,24 @@
+{{/*
+Usage:
+{{< highlight_with_caption lang="c++" caption="glm::quat 输入欧拉角的构造函数" label="lst:quatconstruct">}}
+下文引用 {{< reference label="lst:quatconstruct" >}} 的示例。
+*/}}
+
+<!-- local reference link -->
+<!-- use name as an anchor here, use id as a ref on caption-header span -->
+{{ with .Get "label" }}<a name="{{ . }}"></a>{{ end }}
+<!-- code block -->
+{{ $lang := .Get "lang" }}
+{{ $options := .Get "options" }}
+{{ $input := (trim .Inner "\n\r") }}
+{{ highlight $input $lang $options }}
+<!-- caption -->
+{{ if .Get "caption" }}
+    <div class="referencable caption-code" type="code">
+        <!-- fill caption-header by js in reference.html -->
+        <!-- add prefix ref_ to avoid being directly linked, should link to the anchor -->
+        <span class="caption-header" {{ with .Get "label" }}id="ref_{{ . }}"{{ end }}></span>
+        <span class="caption-spliter">: </span>
+        <span>{{ .Get "caption" }}</span>
+    </div>
+{{ end }}

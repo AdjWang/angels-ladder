@@ -1,0 +1,23 @@
+{{/*
+Usage:
+{{< image_with_caption src="./quat_rotate.svg" width=25% caption="示例图" label="img:quat_rotate">}}
+下文引用 {{< reference label="img:quat_rotate" >}} 的示例。
+*/}}
+
+<!-- local reference link -->
+<!-- use name as an anchor here, use id as a ref on caption-header span -->
+{{ with .Get "label" }}<a name="{{ . }}"></a>{{ end }}
+<!-- image with optional link -->
+{{ with .Get "link" }}<a href="{{ . }}">{{ end }}
+<img src="{{ .Get "src" }}" />
+{{ if .Get "link" }}</a>{{ end }}
+<!-- caption -->
+{{ if .Get "caption" }}
+    <div class="referencable caption" type="image">
+        <!-- fill caption-header by js in reference.html -->
+        <!-- add prefix ref_ to avoid being directly linked, should link to the anchor -->
+        <span class="caption-header" {{ with .Get "label" }}id="ref_{{ . }}"{{ end }}></span>
+        <span class="caption-spliter">: </span>
+        <span>{{ .Get "caption" }}</span>
+    </div>
+{{ end }}

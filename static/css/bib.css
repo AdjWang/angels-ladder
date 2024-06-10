@@ -1,0 +1,9 @@
+.csl-entry {
+  display: flex;
+}
+
+.csl-entry-seqnum {
+  display: block;
+  float: left;
+  margin-right: 10px;
+}

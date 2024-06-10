@@ -1,0 +1,16 @@
+/* universal captions */
+.caption {
+  text-align: center;
+}
+
+/* captions for code blocks */
+.caption-code {
+  text-align: center;
+  /* overlaps the margin of pre in theme.css */
+  margin-top: -25px;
+}
+
+.caption-header,
+.caption-spliter {
+    font-weight: bold;
+}

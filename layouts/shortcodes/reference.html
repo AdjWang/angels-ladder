@@ -1,0 +1,16 @@
+{{/*
+Similar to the \ref{} in latex.
+Usage:
+{{< image_with_caption src="./quat_rotate.svg" width=25% caption="示例图" label="img:quat_rotate">}}
+下文引用 {{< reference label="img:quat_rotate" >}} 的示例。
+*/}}
+
+<!-- for \ref{#label} in later content -->
+<a href='#{{ if .Get "label" }}{{ .Get "label" }}{{ else }}?{{ end }}'>
+    {{ with .Get "label" }}
+    <!-- fill ref by js in caption_header.html -->
+    <span class="ref" ref_id="ref_{{ . }}"></span>
+    {{ else }}
+    ?
+    {{ end }}
+</a>

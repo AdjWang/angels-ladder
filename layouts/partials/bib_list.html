@@ -1,0 +1,90 @@
+<script src="https://cdn.jsdelivr.net/gh/larsgw/citation.js@archive/citation.js/citation-0.4.0-10.min.js"></script>
+<script>
+  const Cite = require('citation-js');
+</script>
+
+<script>
+  // copy your bib file to the static resources
+  async function load_citations(src) {
+    if (src == "") {
+      throw new Error(`Invalid src: ${src}`);
+    }
+    const response = await fetch(src);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const bibContent = await response.text();
+    var citation = new Cite(bibContent);
+    return citation;
+  }
+
+  // filter uncited bibs
+  function filter_citations(citations, keys) {
+    citations.data = citations.data.filter(cite => {
+      return keys.includes(cite['citation-label']);
+    });
+    return citations;
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof Cite === 'undefined') {
+      return;
+    }
+    const cite_refs = document.querySelectorAll('.cite');
+    if (cite_refs === null) {
+      return;
+    }
+    const bib_list = document.getElementById('bib-list');
+    if (typeof bib_list === 'undefined') {
+      return;
+    }
+
+    // prepare data
+    var citations;
+    try {
+      citations = await load_citations(bib_list.getAttribute('src'));
+    } catch (error) {
+      console.error('Error fetching or processing the .bib file:', error);
+      return;
+    }
+    // scan all cite links
+    const cite_names = [...cite_refs].map(ref => ref.getAttribute('name'));
+    // filter uncited bibs
+    citations = filter_citations(citations, cite_names);
+    if (citations.length === 0) {
+      return;
+    }
+
+    // show bib list
+    const apaCitation = citations.format('bibliography', {
+      format: 'html',
+      template: 'apa',
+      lang: 'en-US'
+    });
+    document.getElementById('bib-list').innerHTML = apaCitation;
+    // give each entry a id to be referencable
+    const csl_entries = document.querySelectorAll('.csl-entry');
+    csl_entries.forEach(bib_item => {
+      bib_item.setAttribute('id', bib_item.getAttribute('data-csl-entry-id'));
+    });
+    // add sequence numbers
+    csl_entries.forEach((bib_item, idx) => {
+      const seqnum_node = document.createElement("span");
+      seqnum_node.setAttribute('class', 'csl-entry-seqnum');
+      seqnum_node.textContent = `[${idx + 1}]`;
+      bib_item.parentElement.insertBefore(seqnum_node, bib_item);
+    });
+
+    // fill cite links
+    let cite_ref_data = {};
+    csl_entries.forEach((bib_item, idx) => {
+      cite_ref_data[bib_item.getAttribute('data-csl-entry-id')] = idx + 1;
+    });
+    cite_refs.forEach(ref => {
+      const ref_name = ref.getAttribute('name');
+      const ref_idx = cite_ref_data[ref_name];
+      ref.textContent = `[${ref_idx}]`;
+      ref.setAttribute('href', '#' + ref_name);
+    });
+  });
+</script>

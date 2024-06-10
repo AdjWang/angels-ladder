@@ -10,6 +10,9 @@
     {{ $isHomePage := eq .Title .Site.Title }}{{ .Title }}{{ if eq $isHomePage false }} | {{ .Site.Title }}{{ end }}
   </title>
 
+  <!-- Icon logo in title bar
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  {{ with .Site.Params.profile }}<link rel="icon" href="{{ . }}" type="image/icon type">{{ end }}
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -25,7 +28,8 @@
   <link rel="stylesheet" href="/css/responsive.css">
   <link rel="stylesheet" href="/css/highlight_monokai.css">
   <link rel="stylesheet" href="/css/theme.css">
-  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/reference.css">
+  <link rel="stylesheet" href="/css/bib.css">
   
   <!-- RSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -40,6 +44,12 @@
     <script type="text/javascript">stLight.options({publisher: '{{ . }}', doNotHash: true, doNotCopy: true, hashAddressBar: false});</script>
   {{ end }}
 
+  {{ if .Param "math" }}
+    {{ partial "math.html" . }}
+  {{ end }}
+
+  {{ partial "caption_header.html" . }}
+  {{ partial "bib_list.html" . }}
 
 </head>
 

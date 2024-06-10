@@ -1,0 +1,30 @@
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // fill caption headers
+    var referencables = document.querySelectorAll('.referencable');
+    var grouped_headers = Object.groupBy(referencables, item => item.getAttribute('type'));
+    const caption_table_zh = {
+        'image': '图',
+        'code': '程序',
+    };
+    Object.entries(caption_table_zh).forEach(([cap_type, cap_header]) => {
+        var caption_header_counter = 1;
+        if (typeof grouped_headers[cap_type] === 'undefined') {
+            return;
+        }
+        grouped_headers[cap_type].forEach(header_block => {
+            var header = header_block.querySelector('.caption-header');
+            header.textContent = `${cap_header} ${caption_header_counter++}`;
+        });
+    });
+
+    // fill references contents by their corresponding captions
+    var references = document.querySelectorAll('.ref');
+    references.forEach(ref => {
+        var ref_id = ref.getAttribute('ref_id');
+        ref_id = ref_id.replace(':', '\\:');
+        var target = document.querySelector(`#${ref_id}`);
+        ref.textContent = `${target.textContent}`;
+    });
+});
+</script>

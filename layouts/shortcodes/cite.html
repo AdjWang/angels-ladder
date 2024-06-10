@@ -1,0 +1,9 @@
+{{/*
+Similar to the \cite{} in latex.
+Usage:
+参考 {{< cite name="quat_mul" >}}。
+*/}}
+
+<!-- for \cite{#label} in later content -->
+<!-- fill content in partials/bib_list.html -->
+<a class="cite" name='{{ .Get "name" }}'>?</a>
