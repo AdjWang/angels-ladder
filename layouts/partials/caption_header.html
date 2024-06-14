@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
     Object.entries(caption_table_zh).forEach(([cap_type, cap_header]) => {
         var caption_header_counter = 1;
         if (typeof grouped_headers[cap_type] === 'undefined') {
+            console.error(`unknown caption type: ${cap_type}`);
             return;
         }
         grouped_headers[cap_type].forEach(header_block => {

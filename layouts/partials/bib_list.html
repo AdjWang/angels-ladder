@@ -70,6 +70,7 @@
     // add sequence numbers
     csl_entries.forEach((bib_item, idx) => {
       const seqnum_node = document.createElement("span");
+      // apply seqnum style
       seqnum_node.setAttribute('class', 'csl-entry-seqnum');
       seqnum_node.textContent = `[${idx + 1}]`;
       bib_item.parentElement.insertBefore(seqnum_node, bib_item);

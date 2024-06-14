@@ -15,7 +15,7 @@ Usage:
 <!-- caption -->
 {{ if .Get "caption" }}
     <div class="referencable caption-code" type="code">
-        <!-- fill caption-header by js in reference.html -->
+        <!-- fill caption-header by js in caption_header.html -->
         <!-- add prefix ref_ to avoid being directly linked, should link to the anchor -->
         <span class="caption-header" {{ with .Get "label" }}id="ref_{{ . }}"{{ end }}></span>
         <span class="caption-spliter">: </span>
