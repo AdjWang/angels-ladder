@@ -1,3 +1,9 @@
+.cite {
+  position: relative;
+  font-size: 95%;
+  bottom: 4px;
+}
+
 .csl-entry {
   display: flex;
 }
