@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="/css/theme.css">
   <link rel="stylesheet" href="/css/reference.css">
   <link rel="stylesheet" href="/css/bib.css">
+  <link rel="stylesheet" href="/css/table_of_contents.css">
   
   <!-- RSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -51,12 +52,22 @@
   {{ partial "caption_header.html" . }}
   {{ partial "bib_list.html" . }}
 
+  {{ if .Param "table_of_contents" }}
+    {{ partial "table_of_contents.html" . }}
+  {{ end }}
+
 </head>
 
 
 
 <body>
 <div class="container">
+  {{ if .Param "table_of_contents" }}
+    <div id="TableOfContentsArea">
+      <strong>目录</strong>
+      {{ .TableOfContents }}
+    </div>
+  {{ end }}
 
   <!-- Header Section Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->

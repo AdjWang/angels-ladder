@@ -16,6 +16,7 @@
 /*	MAIN CONTAINER
 	Set the width to whatever you want the width of your site to be. */
 .container {
+  position: relative;
   max-width: 900px;
   margin: 0 auto; }
 

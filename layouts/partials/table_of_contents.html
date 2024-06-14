@@ -1,0 +1,53 @@
+<script type="text/javascript">
+
+    // Intersection Observer Options
+    var myObserverOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: [1],
+    };
+
+    // Each Intersection Observer runs setCurrent
+    var observeHtags = new IntersectionObserver(setCurrent, myObserverOptions);
+
+    // Add IO to all headings
+    function addIntersectionObserver() {
+        var tags = [];
+        {{ range seq .Site.Params.toc_start_level .Site.Params.toc_end_level }}
+            tags.push(".container h{{ . }}");
+        {{ end }}
+        var allHtags = document.querySelectorAll(tags.join(', '));
+        allHtags.forEach(tag => {
+            observeHtags.observe(tag);
+        });
+    }
+
+    function activeItem(toc_item) {
+        document.querySelectorAll("#TableOfContents a").forEach(item => {
+            if (item === toc_item) {
+                item.classList.add("active");
+            } else {
+                item.classList.remove("active");
+            }
+        });
+    }
+
+    // runs when the Intersection Observer is sent
+    function setCurrent(e) {
+        e.map(i => {
+            let toc_item = document.querySelector(`#TableOfContents a[href="#${i.target.id}"]`);
+            if (toc_item === null) {
+                return;
+            }
+            if (i.isIntersecting === true) {
+                activeItem(toc_item);
+            }
+        })
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        addIntersectionObserver();
+        document.getElementById('TableOfContentsArea').style.display = '';
+    });
+
+</script>
